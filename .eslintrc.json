@@ -2,7 +2,10 @@
   "extends": [
     "next/core-web-vitals",
     "standard",
-    "plugin: tailwindcss/recommended",
+    "plugin:tailwindcss/recommended",
     "prettier"
-  ]
+  ],
+  "rules": {
+    "no-unused-vars": "warn"
+  }
 }
