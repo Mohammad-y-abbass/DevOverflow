@@ -1,10 +1,9 @@
-const page = () => {
-  return (
-    <>
-      <h1 className='h1-bold'>HELLO</h1>
-      <h2 className="h2-bold">Hello world</h2>
-    </>
-  );
-};
+import { UserButton } from '@clerk/nextjs';
 
-export default page;
+export default function Home() {
+  return (
+    <div className='h-screen'>
+      <UserButton afterSignOutUrl='/' />
+    </div>
+  );
+}
