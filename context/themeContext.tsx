@@ -12,12 +12,16 @@ export default function ThemeProvider({
   children: React.ReactNode;
 }) {
   const [mode, setMode] = useState('');
-  const handleModeChange = (mode) => {
-    if (mode === 'dark') {
-      setMode('light');
-      document.documentElement.classList.add('light');
-    } else {
+  const handleModeChange = () => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) &&
+        window.matchMedia('prefers-color-scheme: dark').matches)
+    ) {
       setMode('dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      setMode('light');
       document.documentElement.classList.remove('dark');
     }
   };
