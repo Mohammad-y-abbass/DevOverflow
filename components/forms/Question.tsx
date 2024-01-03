@@ -1,4 +1,6 @@
 'use client';
+import React, { useRef, useState } from 'react';
+
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -14,6 +16,7 @@ import {
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { QuestionValidation } from '@/lib/validations';
+import { Editor } from '@tinymce/tinymce-react';
 
 function onSubmit(values: z.infer<typeof QuestionValidation>) {
   // Do something with the form values.
@@ -47,7 +50,7 @@ const Question = () => {
               </FormLabel>
               <FormControl className='mt-3.5'>
                 <Input
-                  className='no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border'
+                  className='paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border'
                   {...field}
                 />
               </FormControl>
@@ -58,6 +61,37 @@ const Question = () => {
               <FormMessage className='text-red-500' />
             </FormItem>
           )}
+        />
+        <Editor
+          apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+          init={{
+            height: 350,
+            menubar: false,
+            plugins: [
+              'advlist',
+              'autolink',
+              'lists',
+              'link',
+              'image',
+              'charmap',
+              'preview',
+              'anchor',
+              'searchreplace',
+              'visualblocks',
+              'codesample',
+              'fullscreen',
+              'insertdatetime',
+              'media',
+              'table',
+              'wordcount',
+            ],
+            toolbar:
+              'undo redo | ' +
+              'codesample | bold italic forecolor | alignleft aligncenter |' +
+              'alignright alignjustify | bullist numlist outdent indent',
+            content_style: 'body { font-family:Inter; font-size:16px }',
+          }}
+          initialValue='Welcome to TinyMCE!'
         />
         <Button className='w-full' type='submit'>
           Submit
