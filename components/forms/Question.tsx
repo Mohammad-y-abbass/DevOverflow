@@ -18,15 +18,17 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { QuestionValidation } from '@/lib/validations';
 import { Editor } from '@tinymce/tinymce-react';
-import { type } from 'os';
+
+const type = 'create';
 
 function onSubmit(values: z.infer<typeof QuestionValidation>) {
-  // Do something with the form values.
-  // ✅ This will be type-safe and validated.
-  console.log(values);
+  setIsSubmitting(true);
 }
 
 const Question = () => {
+  const editorRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof QuestionValidation>>({
     resolver: zodResolver(QuestionValidation),
     defaultValues: {
@@ -185,8 +187,16 @@ const Question = () => {
             </FormItem>
           )}
         />
-        <Button className='w-full' type='submit'>
-          Submit
+        <Button
+          type='submit'
+          className='primary-gradient w-fit !text-light-900'
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>{type === 'Edit' ? 'Editing...' : 'Posting...'}</>
+          ) : (
+            <>{type === 'Edit' ? 'Edit Question' : 'Ask a Question'}</>
+          )}
         </Button>
       </form>
     </Form>
